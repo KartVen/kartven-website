@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:test
+    username: root
+    password:
+  liquibase:
+    contexts: dev
+    change-log: classpath:/db/changelog/master.xml
+  jpa:
+    show-sql: true

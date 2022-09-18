@@ -1,0 +1,143 @@
+header {
+    --gap: 2rem;
+    --navy-color-alpha: #071730D8;
+
+    display: flex;
+    gap: var(--gap);
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 50px;
+    position: fixed;
+    width: 100%;
+    height: 100px;
+    z-index: 100;
+}
+
+.header-scroll {
+    transition: background-color;
+    transition-delay: 350ms;
+    transition-timing-function: ease-in;
+    background-color: var(--navy-color-alpha);
+}
+
+header h1 {
+    color: var(--aqua-color);
+}
+
+header > a {
+    text-decoration: none;
+    letter-spacing: 2px;
+}
+
+.logo-text {
+    margin: 2rem 0;
+}
+
+.primary-nav {
+    display: flex;
+    align-items: center;
+}
+
+.primary-nav > * {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.primary-nav .menu {
+    gap: var(--gap);
+    counter-reset: navcounter;
+
+}
+
+@supports (height: fit-content) {
+    .primary-nav .menu {
+        height: fit-content;
+    }
+}
+
+.primary-nav a {
+    letter-spacing: 1px;
+    text-decoration: none;
+    font-weight: 500;
+    display: block;
+    overflow: hidden;
+}
+
+.primary-nav .menu a {
+    height: fit-content;
+    /*font-size: clamp(14px, 4vw, 18px);*/
+}
+
+.primary-nav .menu li a::before {
+    counter-increment: navcounter;
+    content: "0" counter(navcounter);
+    font-weight: 700;
+    margin-right: 5px;
+    text-align: right;
+    z-index: 100;
+    color: var(--aqua-color);
+}
+
+.primary-nav .menu li a:hover {
+    transition: color 200ms ease-in;
+    color: var(--aqua-color);
+}
+
+.mobile-menu-btn {
+    display: none;
+}
+
+@media (max-width: 1080px) {
+    header {
+        padding: 0 40px;
+    }
+}
+
+@media (max-width: 768px) {
+    header {
+        padding: 0 25px;
+    }
+
+    .primary-nav {
+        position: fixed;
+        inset: 0 0 0 30%;
+        flex-direction: column;
+        padding: min(20vh, 10rem) 2em;
+        background: var(--navy-light-color);
+        gap: 2em;
+        transform: translateX(100%);
+        transition: transform 350ms ease-out;
+    }
+
+    .primary-nav .menu {
+        flex-direction: column;
+    }
+
+    .primary-nav .menu a {
+        padding: unset;
+        font-size: 18px;
+    }
+
+    .primary-nav.active {
+        transform: translateX(0%);
+    }
+
+    .primary-nav .menu li {
+        display: block;
+        margin: 0 auto;
+    }
+
+    .mobile-menu-btn {
+        display: block;
+        background: transparent;
+        position: absolute;
+        aspect-ratio: 1;
+        top: 2rem;
+        right: 2rem;
+        z-index: 9999;
+        border: 0;
+        color: #49a28a;
+    }
+}

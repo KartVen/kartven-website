@@ -1,16 +1,12 @@
 package pl.kartven.portfoliopage.category;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/category")
 public class CategoryController {
     private final CategoryService categoryService;
 
@@ -18,15 +14,25 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
-    @GetMapping("/category")
-    List<CategoryDto> getAllCategories(){
-        return categoryService.getCategory();
+    @GetMapping("/{id}")
+    public ResponseEntity<CategoryDto> getCategoryById(@PathVariable Long id){
+        return ResponseEntity.ok(categoryService.getCategoryById(id));
     }
 
-    @GetMapping("/category/{id}")
-    ResponseEntity<CategoryDto> getCategoryById(@PathVariable Long id){
-        return categoryService.getCategoryById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    @GetMapping
+    List<CategoryDto> getAllCategories() {
+        return categoryService.getCategories();
     }
+
+    @PostMapping
+    CategoryDto createCategory(@RequestBody CategorySaveDto categorySaveDto) {
+        return categoryService.createCategory(categorySaveDto);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<CategoryDto> updateCategory(@PathVariable Long id, @RequestBody CategoryDto categoryDto) {
+        categoryDto.setId(id);
+        return ResponseEntity.ok(categoryService.updateCategory(categoryDto));
+    }
+
 }

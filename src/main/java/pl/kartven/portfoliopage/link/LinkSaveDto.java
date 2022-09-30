@@ -1,25 +1,17 @@
 package pl.kartven.portfoliopage.link;
 
-public class LinkDto {
-    private Long id;
+public class LinkSaveDto {
     private String name;
     private String href;
+    private Long categoryid;
 
-    public LinkDto() {
+    public LinkSaveDto() {
     }
 
-    public LinkDto(Long id, String name, String href) {
-        this.id = id;
+    public LinkSaveDto(String name, String href, Long categoryId) {
         this.name = name;
         this.href = href;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+        this.categoryid = categoryId;
     }
 
     public String getName() {
@@ -36,5 +28,13 @@ public class LinkDto {
 
     public void setHref(String href) {
         this.href = href;
+    }
+
+    public Long getCategoryid() {
+        return categoryid;
+    }
+
+    public void setCategoryid(Long categoryid) {
+        this.categoryid = categoryid;
     }
 }

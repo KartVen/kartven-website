@@ -1,9 +1,9 @@
 package pl.kartven.portfoliopage.category;
 
 import org.springframework.stereotype.Service;
+import pl.kartven.portfoliopage.exception.DataNotFoundException;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CategoryService {
@@ -13,16 +13,30 @@ public class CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
-    public List<CategoryDto> getCategory() {
+    public List<CategoryDto> getCategories() {
         return categoryRepository.findAll()
                 .stream()
                 .map(CategoryDtoMapper::map)
                 .toList();
     }
 
-    Optional<CategoryDto> getCategoryById(Long id){
-        return categoryRepository.findById(id)
-                .map(CategoryDtoMapper::map);
+    public CategoryDto createCategory(CategorySaveDto categorySaveDto) {
+        Category category = new Category();
+        category.setName(categorySaveDto.getName());
+        return CategoryDtoMapper.map(categoryRepository.save(category));
     }
 
+    public CategoryDto getCategoryById(Long id) {
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() -> new DataNotFoundException("Category not exist with id: " + id));
+        return CategoryDtoMapper.map(category);
+    }
+
+    public CategoryDto updateCategory(CategoryDto categoryDto) {
+        Category category = categoryRepository.findById(categoryDto.getId())
+                .orElseThrow(() -> new DataNotFoundException("Category not exist with id: " + categoryDto.getId()));
+
+        category.setName(categoryDto.getName());
+        return CategoryDtoMapper.map(categoryRepository.save(category));
+    }
 }

@@ -10,6 +10,9 @@ public class CategoryDto {
     private String name;
     private List<LinkDto> listOfLink;
 
+    public CategoryDto() {
+    }
+
     public CategoryDto(Long id, String name) {
         this.id = id;
         this.name = name;
